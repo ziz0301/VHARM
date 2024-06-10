@@ -5,6 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/styles.css">
     <title>Home</title>
+	<style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .toggle-heading {
+            cursor: pointer;
+            background-color: #f2f2f2;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-top: 10px;
+        }
+        .code-field {
+            display: none;
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            border-radius: 5px;
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .code-field pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -19,6 +56,55 @@
     <main>
         <h1>Welcome to My Website</h1>
         <p>This is the home page.</p>
+		<h1>Welcome to the JSON Data Page</h1>
+
+    <div class="toggle-heading" onclick="toggleCodeField('json1')">JSON Data 1</div>
+    <div class="code-field" id="json1">
+        <button class="copy-button" onclick="copyToClipboard('json1')">Copy Code</button>
+        <pre>
+{
+    "name": "John Doe",
+    "age": 30,
+    "city": "New York"
+}
+        </pre>
+    </div>
+
+    <div class="toggle-heading" onclick="toggleCodeField('json2')">JSON Data 2</div>
+    <div class="code-field" id="json2">
+        <button class="copy-button" onclick="copyToClipboard('json2')">Copy Code</button>
+        <pre>
+{
+    "company": "Tech Inc.",
+    "position": "Developer",
+    "experience": 5
+}
+        </pre>
+    </div>
+
+    <!-- Add more JSON data sections as needed -->
+
+    <script>
+        function toggleCodeField(id) {
+            var codeField = document.getElementById(id);
+            if (codeField.style.display === "none" || codeField.style.display === "") {
+                codeField.style.display = "block";
+            } else {
+                codeField.style.display = "none";
+            }
+        }
+
+        function copyToClipboard(id) {
+            var codeField = document.getElementById(id).getElementsByTagName('pre')[0];
+            var textArea = document.createElement("textarea");
+            textArea.value = codeField.textContent;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("Copy");
+            textArea.remove();
+            alert("Code copied to clipboard!");
+        }
+    </script>
     </main>
 </body>
 </html>
