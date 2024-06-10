@@ -1,0 +1,94 @@
+{
+	"IVN":{
+		"BUS":[
+			{"key": "BDYCAN", "name": "BDYCAN", "protocol": "CAN"},
+			{"key": "PTCAN", "name": "PTCAN", "protocol":"CAN"},
+			{"key": "ETH", "name" :"ETH", "protocol":"Automotive Ethernet"}
+		],	
+		
+		"VUL":[
+			{"key":"v1", "name": "CVE-2011-3928", "prob": 0.71 , "impact": 6.17},
+			{"key":"v2", "name": "CVE-2013-6282", "prob": 0.46 , "impact": 10},
+			{"key":"v3", "name": "weak-authenticate", "prob": 0.72 , "impact": 8.83},
+			{"key":"v4", "name": "static authenticated backdoor", "prob": 0.33 , "impact": 10},
+			{"key":"v5", "name": "weak-algorithm", "prob": 0.59 , "impact":10}
+		],
+		
+		"ECU":[
+			{"key":"IS","name": "Infotainment System", "ecutype": "diagclient", "bus": "ETH",
+				"components": [
+					{"key": "CID", "name": "Central Information Display", "os": "QNX", "connection": ["IC", "Parrot","GW"],"safetyimpact": 1,
+						"services": [					
+							{"name": "webkit", "privilege": "browser", "connection": "diag_service", "vuls": "v1", "attacksurface": "true"},
+							{"name": "uaccess", "privilege": "root","connection": "webkit", "vuls": "v2"}
+						]
+					},
+					{"key": "IC", "name": "Instrument Cluster", "os": "QNX", "connection": ["CID"], "safetyimpact": 1,
+						"services": [					
+							{"name": "login", "privilege": "root", "connection": ["uaccess"], "vuls": "v4"}
+						]
+					},
+					{"key": "Parrot", "name": "HU-Intel", "os": "QNX", "connection": ["CID"], "safetyimpact": 1,
+						"services": [					
+							{"name": "login", "privilege": "root", "connection": ["uaccess"], "vuls": "v4"}
+						]
+					}
+				]
+			},			
+			{"key": "GW", "name": "GW", "ecutype": "gateway", "bus": ["ETH", "BDYCAN", "PTCAN"],
+				"components": [
+					{"key": "GW","name": "GW", "os": "PowerPC", "connection": ["CID", "ABS_c", "ESP_c", "TRUNK_c", "LIGHT_c"], "safetyimpact": 2,
+						"services": [					
+							{"name": "transfer_can_mess", "privilege": "root"},
+							{"name": "transfer_uds_mess", "privilege": "root"},
+							{"name": "backdoor", "privilege": "root", "vuls": "v3"}
+						]
+					}
+				]				
+			},
+			{"key": "ABS", "name": "ABS", "ecutype": "diagserver", "bus": "PTCAN",
+				"components": [
+					{"key": "ABS_c", "name": "ABS_c", "os": "ABS_os", "connection": ["GW"], "safetyimpact": 3,
+						"services": [					
+							{"name": "brake_ctr", "privilege": "root"},
+							{"name": "handle_uds_message", "privilege": "root", "vuls": "v5"},
+							{"name": "brake_ctr_on_can", "privilege": "root"}
+						]
+					}
+				]				
+			},
+			{"key": "ESP", "name": "ESP", "ecutype": "diagserver", "bus": "PTCAN",
+				"components": [
+					{"key": "ESP_c", "name": "ESP_c", "os": "ESP_os", "connection": ["GW"], "safetyimpact": 3,
+						"services": [					
+							{"name": "steering_ctr", "privilege": "root"},
+							{"name": "handle_uds_message", "privilege": "root", "vuls": "v5"},
+							{"name": "steering_ctr_on_can", "privilege": "root"}
+						]
+					}
+				]				
+			},
+			{"key": "TRUNK", "name": "TRUNK", "ecutype": "normal", "bus": "BDYCAN",
+				"components": [
+					{"key": "TRUNK_c", "name": "TRUNK_c", "os": "TRUNK_os", "connection": ["GW"], "safetyimpact": 1,
+						"services": [					
+							{"name": "trunk_ctr", "privilege": "root"},
+							{"name": "trunk_ctr_on_can", "privilege": "root"}
+						]
+					}
+				]				
+			},
+			{"key": "LIGHT", "name": "LIGHT", "ecutype": "normal", "bus": "BDYCAN",
+				"components": [
+					{"key": "LIGHT_c", "name": "LIGHT_c", "os": "LIGHT_os", "connection": ["GW"], "safetyimpact": 1,
+						"services": [					
+							{"name": "light_ctr", "privilege": "root"},
+							{"name": "light_ctr_on_can", "privilege": "root"}
+						]
+					}
+				]				
+			}
+		]
+	}
+}
+      

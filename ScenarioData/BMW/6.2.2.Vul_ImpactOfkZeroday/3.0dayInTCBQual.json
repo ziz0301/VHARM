@@ -1,0 +1,40 @@
+{
+	"Architecture":{
+		"nodeDataArray":[
+			{"key":"A","type":"special"},
+			{"key":"HU-Intel","group":"HU","impact":4.93,"type":"component","attacksurface":true},
+			{"key":"HU-Jacinto","group":"HU","impact":4.13,"type":"component","attacksurface":false},
+			
+			{"key":"TCB-Qual","group":"TCB","impact":4.93,"type":"component","attacksurface":true},			
+			{"key":"EDME","group":"PTCAN","impact":7,"type":"AccessNode","component":"EDME_c","attacksurface":false},			
+			{"key":"EPS","group":"PTCAN","impact":7,"type":"AccessNode","component":"EPS_c","attacksurface":false},
+			{"key":"FLER","group":"KCAN4","impact":4.93,"type":"AccessNode","component":"FLER_c","attacksurface":false},
+			{"key":"BDC","group":"KCAN4","impact":6,"type":"AccessNode","component":"BDC_c","attacksurface":false},
+			
+			{"key":"TCB","isGroup":true,"type":"ECU"},			
+			{"key":"HU","isGroup":true,"type":"ECU"},
+			{"key":"PTCAN","isGroup":true,"type":"CANBUS"},
+			{"key":"KCAN4","isGroup":true,"type":"CANBUS"}
+		],
+		"linkDataArray":[
+			{"from":"HU-Intel","to":"HU-Jacinto","connecttype":"network"},
+			{"from":"HU-Intel","to":"EDME","connecttype":"UDS"},
+			{"from":"HU-Intel","to":"EPS","connecttype":"UDS"},
+			{"from":"HU-Intel","to":"BDC","connecttype":"UDS"},
+			
+			{"from":"HU-Jacinto","to":"FLER","connecttype":"CAN"},
+			{"from":"HU-Jacinto","to":"BDC","connecttype":"CAN"},
+			
+			{"from":"TCB-Qual","to":"EDME","connecttype":"UDS"},
+			{"from":"TCB-Qual","to":"EPS","connecttype":"UDS"},
+			{"from":"TCB-Qual","to":"BDC","connecttype":"UDS"}
+		]
+	},
+	"Vulnerability":[
+		{"key":"TCB-Qual","figure":"None", "type":"root"},
+		{"key":"zerovul1","parent":"TCB-Qual", "figure":"None"},
+	
+		{"key":"BDC","figure":"None","type":"root"},
+		{"key":"BDC_access","parent":"BDC","figure":"None","prob":0.59,"type":"accessable"}
+	]
+}

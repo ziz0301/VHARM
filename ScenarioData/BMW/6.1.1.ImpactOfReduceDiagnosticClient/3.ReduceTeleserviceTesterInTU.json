@@ -1,0 +1,55 @@
+{
+	"Architecture":{
+		"nodeDataArray":[
+			{"key":"A","type":"special"},
+			{"key":"HU-Intel","group":"HU","impact":4.93,"type":"component","attacksurface":true},
+			{"key":"HU-Jacinto","group":"HU","impact":4.13,"type":"component","attacksurface":false},
+			
+			{"key":"TCB-Qual","group":"TCB","impact":4.93,"type":"component","attacksurface":true},			
+			{"key":"EDME","group":"PTCAN","impact":7,"type":"AccessNode","component":"EDME_c","attacksurface":false},			
+			{"key":"EPS","group":"PTCAN","impact":7,"type":"AccessNode","component":"EPS_c","attacksurface":false},
+			{"key":"FLER","group":"KCAN4","impact":4.93,"type":"AccessNode","component":"FLER_c","attacksurface":false},
+			{"key":"BDC","group":"KCAN4","impact":6,"type":"AccessNode","component":"BDC_c","attacksurface":false},
+			
+			{"key":"TCB","isGroup":true,"type":"ECU"},			
+			{"key":"HU","isGroup":true,"type":"ECU"},
+			{"key":"PTCAN","isGroup":true,"type":"CANBUS"},
+			{"key":"KCAN4","isGroup":true,"type":"CANBUS"}
+		],
+		"linkDataArray":[
+			{"from":"HU-Intel","to":"HU-Jacinto","connecttype":"network"},
+			{"from":"HU-Intel","to":"EDME","connecttype":"UDS"},
+			{"from":"HU-Intel","to":"EPS","connecttype":"UDS"},
+			{"from":"HU-Intel","to":"BDC","connecttype":"UDS"},
+			
+			{"from":"HU-Jacinto","to":"FLER","connecttype":"CAN"},
+			{"from":"HU-Jacinto","to":"BDC","connecttype":"CAN"}
+		]
+	},
+	"Vulnerability":[
+		{"key":"FLER","figure":"None","type":"root"},
+		{"key":"FLER_access","parent":"FLER","figure":"None","prob":0.59,"type":"accessable"},
+		
+		{"key":"HU-Intel","figure":"OrGate","type":"root"},
+		{"key":"HU-Intel_AND","parent":"HU-Intel","figure":"AndGate","type":"gate"},
+		{"key":"v2","name":"v2","parent":"HU-Intel_AND","figure":"None","prob":0.46,"type":"vulnerability"},
+		{"key":"v1","name":"v1","parent":"HU-Intel_AND","figure":"None","prob":0.46,"type":"vulnerability"},
+		{"key":"v3","name":"v3","parent":"HU-Intel","figure":"None","prob":0.46,"type":"vulnerability"},
+		
+		{"key":"HU-Jacinto","figure":"None","type":"root"},
+		{"key":"v4","name":"v4","parent":"HU-Jacinto","figure":"None","prob":0.72,"type":"vulnerability"},
+		
+		{"key":"TCB-Qual","figure":"AndGate","type":"root"},
+		{"key":"v6","name":"v6","parent":"TCB-Qual","figure":"None","prob":1,"type":"vulnerability"},
+		{"key":"v5","name":"v5","parent":"TCB-Qual","figure":"None","prob":1,"type":"vulnerability"},
+		
+		{"key":"EDME","figure":"None","type":"root"},
+		{"key":"v7","name":"v7","parent":"EDME","figure":"None","prob":0.59,"type":"accessable"},
+		
+		{"key":"EPS","figure":"None","type":"root"},
+		{"key":"v7","name":"v7","parent":"EPS","figure":"None","prob":0.59,"type":"accessable"},
+		
+		{"key":"BDC","figure":"None","type":"root"},
+		{"key":"v7","name":"v7","parent":"BDC","figure":"None","prob":0.59,"type":"accessable"}
+	]
+}

@@ -1,0 +1,48 @@
+{"Architecture":{
+	"nodeDataArray":[
+		{"key":"A","type":"special"},
+		
+		{"key":"CID","group":"IS","impact":5,"type":"component","attacksurface":true},
+		{"key":"IC","group":"IS","impact":4.53,"type":"component","attacksurface":false},
+		{"key":"Parrot","group":"IS","impact":4.53,"type":"component","attacksurface":false},		
+		{"key":"GW_c","group":"GW", "impact":6,"type":"component","attacksurface":false}, 
+		
+		{"key":"ABS","group":"PTCAN","impact":7,"type":"AccessNode","component":"ABS_c","attacksurface":false},
+		{"key":"ESP","group":"PTCAN","impact":7,"type":"AccessNode","component":"ESP_c","attacksurface":false},
+		{"key":"TRUNK","group":"BDYCAN","impact":4.93,"type":"AccessNode","component":"TRUNK_c","attacksurface":false},		
+		{"key":"LIGHT","group":"BDYCAN","impact":4.93,"type":"AccessNode","component":"LIGHT_c","attacksurface":false},
+		
+		{"key":"IS","isGroup":true,"type":"ECU"},
+		{"key":"GW","isGroup":true,"type":"ECU"},
+		{"key":"PTCAN","isGroup":true,"type":"CANBUS"},
+		{"key":"BDYCAN","isGroup":true,"type":"CANBUS"}
+		
+		],
+	"linkDataArray":[		
+		{"from":"CID","to":"IC","connecttype":"network"},
+		{"from":"CID","to":"Parrot","connecttype":"network"},
+		{"from":"CID","to":"GW_c","connecttype":"network"},
+		{"from":"GW_c","to":"ESP","connecttype":"UDS"},
+		{"from":"GW_c","to":"ABS","connecttype":"UDS"},
+		{"from":"GW_c","to":"TRUNK","connecttype":"CAN"},
+		{"from":"GW_c","to":"LIGHT","connecttype":"CAN"}
+	]},
+	"Vulnerability":[
+		{"key":"CID","figure":"AndGate","type":"root"},
+		{"key":"v2","name":"v2","parent":"CID","figure":"None","prob":0.46,"type":"vulnerability"},
+		{"key":"v1","name":"v1","parent":"CID","figure":"None","prob":0.71,"type":"vulnerability"},
+		{"key":"IC","figure":"None","type":"root"},
+		{"key":"v3","name":"v3","parent":"IC","figure":"None","prob":0.72,"type":"vulnerability"},
+		{"key":"Parrot","figure":"None","type":"root"},
+		{"key":"v3","name":"v4","parent":"Parrot","figure":"None","prob":0.72,"type":"vulnerability"},
+		{"key":"GW_c","figure":"None","type":"root"},
+		{"key":"v4","name":"v3","parent":"GW_c","figure":"None","prob":0.33	,"type":"vulnerability"},
+		{"key":"ABS","figure":"None","type":"root"},
+		{"key":"v5","name":"v5","parent":"ABS","figure":"None","prob":0.59,"type":"accessable"},
+		{"key":"ESP","figure":"None","type":"root"},
+		{"key":"v5","name":"v5","parent":"ESP","figure":"None","prob":0.59,"type":"accessable"},
+		{"key":"LIGHT","figure":"None", "type":"root"},
+		{"key":"LIGHT_BDYCANaccess","parent":"LIGHT", "figure":"None","prob":0.59, "type":"accessable"},
+		{"key":"TRUNK","figure":"None", "type":"root"},
+		{"key":"TRUNK_BDYCANccess","parent":"TRUNK", "figure":"None","prob":0.59, "type":"accessable"}
+	]}

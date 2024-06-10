@@ -1,0 +1,109 @@
+{
+	"IVN":{
+		"BUS":[
+			{"key": "KCAN4", "name": "KCAN4", "protocol": "CAN"},
+			{"key": "PTCAN", "name": "PTCAN", "protocol":"CAN"}
+		],	
+		
+		"VUL":[
+			{"key":"v1", "name": "CVE-2012-3748", "prob": 0.46 , "impact":3.53},
+			{"key":"v2", "name": "CVE-2018-9322", "prob": 0.46 , "impact":3.53},
+			{"key":"v3", "name": "CVE-2018-9312", "prob": 0.46 , "impact":3.93},
+			{"key":"v4", "name": "weak-authenticate", "prob": 0.72 , "impact":3.13},
+			{"key":"v5", "name": "CVE-2018-9311", "prob": 1 , "impact":3.93},
+			{"key":"v6", "name": "CVE-2018-9318", "prob": 1 , "impact":3.93},
+			{"key":"v7", "name": "weak-algorithm", "prob": 0.59 , "impact":4}
+		],
+		
+		"ECU":[
+			{"key":"HU","name": "Head Unit", "ecutype": "diagclient", "bus": "KCAN4",
+				"components": [
+					{"key": "HU-Intel", "name": "HU-Intel", "os": "QNX", "connection": ["HU-Jacinto", "diagclient"], "safetyimpact": 1,
+						"services": [					
+							{"name": "webkit", "privilege": "browser", "connection": "diag_service", "vuls": "v1", "attacksurface": "true"},
+							{"name": "diag_service", "privilege": "root","connection": "webkit", "vuls": "v2"},
+							{"name": "nav_update", "privilege": "root", "vuls": "v3", "attacksurface": "true"}
+						]
+					},
+					{"key": "HU-Jacinto", "name": "HU-Jacinto", "os": "QNX", "connection": ["HU-Intel", "GW"], "safetyimpact": 1,
+						"services": [					
+							{"name": "login", "privilege": "root", "connection": ["diag_service","nav_update","sendcan"], "vuls": "v4"},
+							{"name": "sendcan", "privilege": "root", "connection": "login"}
+						]
+					}
+				]
+			},
+			{"key": "TCB", "name": "TCB", "ecutype": "diagclient", "bus": "KCAN4",
+				"components": [
+					{"key": "TCB-Qual", "name": "TCB-Qual", "os": "RexRTOS", "connection": ["TCB-Fs", "diagclient"], "safetyimpact": 1,
+						"services": [					
+							{"name": "sms_handler", "privilege": "sms", "connection": "ota_update", "vuls": "v5", "attacksurface": "true"},
+							{"name": "ota_update", "privilege": "root","connection": "sms_handler", "vuls": "v6"}
+						]
+					},
+					{"key": "TCB-Fs", "name": "TCB-Fs", "os": "Autosar", "connection": ["TCB-Qual", "GW"], "safetyimpact": 1,
+						"services": [					
+							{"name": "login", "privilege": "root", "connection": "sendcan"},
+							{"name": "sendcan", "privilege": "root", "connection": "login"}
+						]
+					}
+				]
+			},
+			{"key": "ZGM", "name": "ZGM", "ecutype": "gateway", "bus": ["KCAN4", "PTCAN"],
+				"components": [
+					{"key": "GW","name": "GW", "os": "PowerPC", "connection": ["HU-Jacinto","TCB-Fs", "EDME_c", "EPS_c", "FLER_c", "BDC_c"], "safetyimpact": 3,
+						"services": [					
+							{"name": "transfer_can_mess", "privilege": "root"},
+							{"name": "transfer_uds_mess", "privilege": "root"},
+							{"name": "whitelist", "privilege": "root"}
+						]
+					}
+				]				
+			},
+			{"key": "EDME", "name": "EDME", "ecutype": "diagserver", "bus": "PTCAN",
+				"components": [
+					{"key": "EDME_c", "name": "EDME_c", "os": "EDME_os", "connection": ["GW"], "safetyimpact": 3,
+						"services": [					
+							{"name": "throttle_ctr", "privilege": "root"},
+							{"name": "handle_uds_message", "privilege": "root", "vuls": "v7"},
+							{"name": "throttle_ctr_on_can", "privilege": "root"}
+						]
+					}
+				]				
+			},
+			{"key": "EPS", "name": "EPS", "ecutype": "diagserver", "bus": "PTCAN",
+				"components": [
+					{"key": "EPS_c", "name": "EPS_c", "os": "EPS_os", "connection": ["GW"], "safetyimpact": 3,
+						"services": [					
+							{"name": "steer_ctr", "privilege": "root"},
+							{"name": "handle_uds_message", "privilege": "root", "vuls": "v7"},
+							{"name": "steer_ctr_on_can", "privilege": "root"}
+						]
+					}
+				]				
+			},
+			{"key": "FLER", "name": "FLER", "ecutype": "normal", "bus": "KCAN4",
+				"components": [
+					{"key": "FLER_c", "name": "FLER_c", "os": "FLER_os", "connection": ["GW"], "safetyimpact": 1,
+						"services": [					
+							{"name": "light_ctr", "privilege": "root"},
+							{"name": "light_ctr_on_can", "privilege": "root"}
+						]
+					}
+				]				
+			},
+			{"key": "BDC", "name": "BDC", "ecutype": "diagserver", "bus": "KCAN4",
+				"components": [
+					{"key": "BDC_c", "name": "BDC_c", "os": "BDC_os", "connection": ["GW"], "safetyimpact": 2,
+						"services": [					
+							{"name": "light_ctr", "privilege": "root"},
+							{"name": "handle_uds_message", "privilege": "root", "vuls": "v7"},
+							{"name": "light_ctr_on_can", "privilege": "root"}
+						]
+					}
+				]				
+			}
+		]
+	}
+}
+      

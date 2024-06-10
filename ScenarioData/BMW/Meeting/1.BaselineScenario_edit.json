@@ -1,0 +1,67 @@
+{
+	"Architecture":{
+			"nodeDataArray": [
+		   {"key": "Browser", "group": "HU", "impact": 2.9, "type":"component", "attacksurface": true},
+			 {"key": "Nav", "group": "HU", "impact": 2.9, "type":"component", "attacksurface": true},
+			 {"key": "Diag", "group": "HU", "impact": 2.9, "type":"component", "attacksurface": true},
+		   {"key": "Intel_Kn", "group": "HU", "impact": 7.9, "type":"component", "attacksurface": false},
+		   {"key": "TiDra_Kn", "group": "HU", "impact": 6, "type":"component", "attacksurface": false},
+
+		   {"key": "RSM","group": "KCAN", "impact": 3.9, "type":"AccessNode", "attacksurface": false},
+		   {"key": "IHKA","group": "KCAN", "impact":3.9, "type":"AccessNode", "attacksurface": false},
+		   {"key": "IC","group": "PTCAN", "impact":4.9, "type":"AccessNode", "attacksurface": false},
+
+		   {"key":"HU", "isGroup": true, "type":"ECU"},
+		   {"key":"KCAN", "isGroup": true, "type":"CANBUS" },
+		   {"key":"PTCAN", "isGroup": true, "type":"CANBUS" }
+		],
+		"linkDataArray": [
+		   {"from": "Browser", "to": "Intel_Kn", "connecttype":"network" },
+			 {"from": "Nav", "to": "Intel_Kn", "connecttype":"network" },
+			  {"from": "Diag", "to": "Intel_Kn", "connecttype":"network" },
+		   {"from": "Intel_Kn", "to": "TiDra_Kn", "connecttype":"network" },
+		   {"from": "Intel_Kn", "to": "RSM", "connecttype":"UDS" },
+		   {"from": "Intel_Kn", "to": "IHKA", "connecttype":"UDS" },
+		   {"from": "Intel_Kn", "to": "IC", "connecttype":"UDS" },
+		   {"from": "TiDra_Kn", "to": "RSM", "connecttype":"CAN" },
+		   {"from": "TiDra_Kn", "to": "IHKA", "connecttype":"CAN" },
+		   {"from": "Qualcomm_Kn", "to": "RSM", "connecttype":"UDS" },
+		   {"from": "Qualcomm_Kn", "to": "IHKA", "connecttype":"UDS" },
+		   {"from": "Qualcomm_Kn", "to": "IC", "connecttype":"UDS"}
+		]
+	},
+	"Vulnerability": [
+
+
+		{"key":"Nav","figure":"None", "type":"root"},
+		{"key":"vul2","parent":"Nav", "figure":"None", "prob":0.45},
+
+		{"key":"Diag","figure":"None", "type":"root"},
+		{"key":"vul1","parent":"Diag", "figure":"None", "prob":0.45},
+
+		{"key":"Browser","figure":"None", "type":"root"},
+		{"key":"vul3","parent":"Browser", "figure":"None", "prob":0.45},
+
+		{"key":"Intel_Kn","figure":"OrGate", "type":"root"},
+		{"key":"vul1","parent":"Intel_Kn", "figure":"None", "prob":0.45},
+		{"key":"vul2","parent":"Intel_Kn", "figure":"None", "prob":0.45},
+		{"key":"AND_Intel","parent":"Intel_Kn", "figure":"AndGate", "type":"gate"},
+		{"key":"vul1","parent":"AND_Intel", "figure":"None", "prob":0.45},
+		{"key":"vul3","parent":"AND_Intel", "figure":"None","prob":0.45, "type":"vulnerability"},
+
+
+		{"key":"TiDra_Kn","figure":"None", "type":"root"},
+		{"key":"vul5","parent":"TiDra_Kn", "figure":"None","prob":0.375, "type":"vulnerability"},
+
+
+
+		{"key":"RSM","figure":"None", "type":"root"},
+		{"key":"RSM_kcanaccess","parent":"RSM", "figure":"None","prob":0.9, "type":"accessable"},
+
+		{"key":"IHKA","figure":"None", "type":"root"},
+		{"key":"IHKA_kcanaccess","parent":"IHKA", "figure":"None","prob":0.9, "type":"accessable"},
+
+		{"key":"IC","figure":"None", "type":"root"},
+		{"key":"IC_ptcanaccess","parent":"IC", "figure":"None","prob":0.9, "type":"accessable"}
+	]
+}
