@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IVN Data Converter</title>
+	<link rel="stylesheet" href="css/styles.css">
+	<link rel="stylesheet" href="css/vharmstyle.css">
     <script>
 		function transformToArchitecture(ivn) {
 			const { IVN } = JSON.parse(ivn);;
@@ -204,6 +206,7 @@
             const convertedData = transformToArchitecture(ivnData);
             document.getElementById('result').value = JSON.stringify(convertedData, null, 0);
         }
+		
 
     </script>
 </head>
@@ -219,8 +222,12 @@
 	</header>
     <h1>IVN Data Converter</h1>
 	
-    <textarea id="ivnData" rows="10" cols="50" placeholder="Paste your IVN JSON data here..."></textarea><br>
-    <button onclick="handleConvert()">Convert</button><br>
-    <textarea id="result" rows="20" cols="50" readonly></textarea>
+	
+	<textarea id="ivnData" rows="10" cols="150" placeholder="Paste your IVN JSON data here..."></textarea><br>
+    <button class="convert-button" onclick="handleConvert()">Convert</button><br>
+    <div class="result-container">
+        <textarea id="result" rows="20" cols="150" readonly></textarea>
+        <button class="copy-button" onclick="copyToClipboard()">Copy Code</button>
+    </div>
 </body>
 </html>
