@@ -14,15 +14,10 @@ ax.plot(x, y2, linestyle='-', marker='s', label='Apply DM3')
 ax.plot(x, y3, linestyle='-.', marker='s', label='Apply DM2 and DM3')
 
 
-# set x and y labels
 ax.set_xlabel('Effectiveness of the Defense Method')
 ax.set_ylabel('System Risk')
 
-# set chart title
 ax.set_title('Impact of system risk while apply compensating defence methods')
 
-# set legend
 ax.legend(loc='best')
-
-# display chart
 plt.show()

@@ -7,27 +7,21 @@ y2 = [13, 8, 6, 9, 10]
 y3 = [42.58, 36.57, 28.60, 38.62, 19.36]
 # y4 = [129.15, 79.84, 49.97, 87.57, 92.07]
 
-# set bar colors
 color1 = '#ED4617'
 color2 = '#002F7B'
 color3 = '#FFC34E'
 # color4 = '#000000'
 
-# create a bar chart with custom colors
 plt.bar(x, y1, width=0.15, align='center', color=color1, label='Longest APL')
 plt.bar([i + 0.15 for i, _ in enumerate(x)], y2, width=0.15, align='center', color=color2, label='NAP')
 plt.bar([i + 0.3 for i, _ in enumerate(x)], y3, width=0.15, align='center', color=color3, label='System Risk')
 # plt.bar([i + 0.45 for i, _ in enumerate(x)], y3, width=0.15, align='center', color=color4, label='System Risk(sum)')
 
 
-# set x and y labels
 plt.xlabel('Patching vulnerabilites in components')
 
-# set chart title
 plt.title('Impact of system risk while patching vulnerabilities in components')
 
-# set legend
 plt.legend(loc='best')
 
-# display chart
 plt.show()

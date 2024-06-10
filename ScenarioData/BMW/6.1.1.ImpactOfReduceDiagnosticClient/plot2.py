@@ -33,7 +33,7 @@ for bars in [bar1, bar2, bar3, bar4]:
         height = bar.get_height()
         ax.annotate(f'{height}',
                     xy=(bar.get_x() + bar.get_width() / 2, height),
-                    xytext=(0, 0.5),  # 3 points vertical offset
+                    xytext=(0, 0.5),
                     textcoords="offset points",
                     ha='center', va='bottom')
 
