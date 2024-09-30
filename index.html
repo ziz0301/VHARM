@@ -150,122 +150,15 @@
 	    	<div class="toggle-heading" onclick="toggleCodeField('baselinebmw')">1. Baseline Scenario</div>
 	    	<div class="code-field" id="baselinebmw">
 			<button class="copy-button" onclick="copyToClipboard('baselinebmw')">Copy Code</button>
-			<pre>
-			{
-			"Architecture":{
-				"nodeDataArray":[
-					{"key":"A","type":"special"},
-					{"key":"HU-Intel","group":"HU","impact":4.93,"type":"component","attacksurface":true},
-					{"key":"HU-Jacinto","group":"HU","impact":4.13,"type":"component","attacksurface":false},
-					
-					{"key":"TCB-Qual","group":"TCB","impact":4.93,"type":"component","attacksurface":true},			
-					{"key":"EDME","group":"PTCAN","impact":7,"type":"AccessNode","component":"EDME_c","attacksurface":false},			
-					{"key":"EPS","group":"PTCAN","impact":7,"type":"AccessNode","component":"EPS_c","attacksurface":false},
-					{"key":"FLER","group":"KCAN4","impact":4.93,"type":"AccessNode","component":"FLER_c","attacksurface":false},
-					{"key":"BDC","group":"KCAN4","impact":6,"type":"AccessNode","component":"BDC_c","attacksurface":false},
-					
-					{"key":"TCB","isGroup":true,"type":"ECU"},			
-					{"key":"HU","isGroup":true,"type":"ECU"},
-					{"key":"PTCAN","isGroup":true,"type":"CANBUS"},
-					{"key":"KCAN4","isGroup":true,"type":"CANBUS"}
-				],
-				"linkDataArray":[
-					{"from":"HU-Intel","to":"HU-Jacinto","connecttype":"network"},
-					{"from":"HU-Intel","to":"EDME","connecttype":"UDS"},
-					{"from":"HU-Intel","to":"EPS","connecttype":"UDS"},
-					{"from":"HU-Intel","to":"BDC","connecttype":"UDS"},
-					
-					{"from":"HU-Jacinto","to":"FLER","connecttype":"CAN"},
-					{"from":"HU-Jacinto","to":"BDC","connecttype":"CAN"},
-					
-					{"from":"TCB-Qual","to":"EDME","connecttype":"UDS"},
-					{"from":"TCB-Qual","to":"EPS","connecttype":"UDS"},
-					{"from":"TCB-Qual","to":"BDC","connecttype":"UDS"}
-				]
-			},
-			"Vulnerability":[
-				{"key":"FLER","figure":"None","type":"root"},
-				{"key":"FLER_access","parent":"FLER","figure":"None","prob":0.59,"type":"accessable"},
-				
-				{"key":"HU-Intel","figure":"OrGate","type":"root"},
-				{"key":"HU-Intel_AND","parent":"HU-Intel","figure":"AndGate","type":"gate"},
-				{"key":"v2","name":"v2","parent":"HU-Intel_AND","figure":"None","prob":0.46,"type":"vulnerability"},
-				{"key":"v1","name":"v1","parent":"HU-Intel_AND","figure":"None","prob":0.46,"type":"vulnerability"},
-				{"key":"v3","name":"v3","parent":"HU-Intel","figure":"None","prob":0.46,"type":"vulnerability"},
-				
-				{"key":"HU-Jacinto","figure":"None","type":"root"},
-				{"key":"v4","name":"v4","parent":"HU-Jacinto","figure":"None","prob":0.72,"type":"vulnerability"},
-				
-				{"key":"TCB-Qual","figure":"AndGate","type":"root"},
-				{"key":"v6","name":"v6","parent":"TCB-Qual","figure":"None","prob":1,"type":"vulnerability"},
-				{"key":"v5","name":"v5","parent":"TCB-Qual","figure":"None","prob":1,"type":"vulnerability"},
-				
-				{"key":"EDME","figure":"None","type":"root"},
-				{"key":"v7","name":"v7","parent":"EDME","figure":"None","prob":0.59,"type":"accessable"},
-				
-				{"key":"EPS","figure":"None","type":"root"},
-				{"key":"v7","name":"v7","parent":"EPS","figure":"None","prob":0.59,"type":"accessable"},
-				
-				{"key":"BDC","figure":"None","type":"root"},
-				{"key":"v7","name":"v7","parent":"BDC","figure":"None","prob":0.59,"type":"accessable"}
-			]
-		}
-			</pre>
-
+			
+		</div>
 	    	<h2> Baseline for Tesla car </h2>
 		<div class="toggle-heading" onclick="toggleCodeField('baselinetesla')">1. Baseline Scenario</div>
 	    	<div class="code-field" id="baselinebmw">
 			<button class="copy-button" onclick="copyToClipboard('baselinetesla')">Copy Code</button>
-			<pre>
-			{"Architecture":{
-				"nodeDataArray":[
-					{"key":"A","type":"special"},
-					
-					{"key":"CID","group":"IS","impact":5,"type":"component","attacksurface":true},
-					{"key":"IC","group":"IS","impact":4.53,"type":"component","attacksurface":false},
-					{"key":"Parrot","group":"IS","impact":4.53,"type":"component","attacksurface":false},		
-					{"key":"GW_c","group":"GW", "impact":6,"type":"component","attacksurface":false}, 
-					
-					{"key":"ABS","group":"PTCAN","impact":7,"type":"AccessNode","component":"ABS_c","attacksurface":false},
-					{"key":"ESP","group":"PTCAN","impact":7,"type":"AccessNode","component":"ESP_c","attacksurface":false},
-					{"key":"TRUNK","group":"BDYCAN","impact":4.93,"type":"AccessNode","component":"TRUNK_c","attacksurface":false},		
-					{"key":"LIGHT","group":"BDYCAN","impact":4.93,"type":"AccessNode","component":"LIGHT_c","attacksurface":false},
-					
-					{"key":"IS","isGroup":true,"type":"ECU"},
-					{"key":"GW","isGroup":true,"type":"ECU"},
-					{"key":"PTCAN","isGroup":true,"type":"CANBUS"},
-					{"key":"BDYCAN","isGroup":true,"type":"CANBUS"}
-					
-					],
-				"linkDataArray":[		
-					{"from":"CID","to":"IC","connecttype":"network"},
-					{"from":"CID","to":"Parrot","connecttype":"network"},
-					{"from":"CID","to":"GW_c","connecttype":"network"},
-					{"from":"GW_c","to":"ESP","connecttype":"UDS"},
-					{"from":"GW_c","to":"ABS","connecttype":"UDS"},
-					{"from":"GW_c","to":"TRUNK","connecttype":"CAN"},
-					{"from":"GW_c","to":"LIGHT","connecttype":"CAN"}
-				]},
-				"Vulnerability":[
-					{"key":"CID","figure":"AndGate","type":"root"},
-					{"key":"v2","name":"v2","parent":"CID","figure":"None","prob":0.46,"type":"vulnerability"},
-					{"key":"v1","name":"v1","parent":"CID","figure":"None","prob":0.71,"type":"vulnerability"},
-					{"key":"IC","figure":"None","type":"root"},
-					{"key":"v3","name":"v3","parent":"IC","figure":"None","prob":0.72,"type":"vulnerability"},
-					{"key":"Parrot","figure":"None","type":"root"},
-					{"key":"v3","name":"v4","parent":"Parrot","figure":"None","prob":0.72,"type":"vulnerability"},
-					{"key":"GW_c","figure":"None","type":"root"},
-					{"key":"v4","name":"v3","parent":"GW_c","figure":"None","prob":0.33	,"type":"vulnerability"},
-					{"key":"ABS","figure":"None","type":"root"},
-					{"key":"v5","name":"v5","parent":"ABS","figure":"None","prob":0.59,"type":"accessable"},
-					{"key":"ESP","figure":"None","type":"root"},
-					{"key":"v5","name":"v5","parent":"ESP","figure":"None","prob":0.59,"type":"accessable"},
-					{"key":"LIGHT","figure":"None", "type":"root"},
-					{"key":"LIGHT_BDYCANaccess","parent":"LIGHT", "figure":"None","prob":0.59, "type":"accessable"},
-					{"key":"TRUNK","figure":"None", "type":"root"},
-					{"key":"TRUNK_BDYCANccess","parent":"TRUNK", "figure":"None","prob":0.59, "type":"accessable"}
-				]}
-			</pre>
+
+		</div>
+			
 			
 		<h2> Section 6.1.1. Effect of the number of diagnostic clients on the system security </h2>
 		<div class="toggle-heading" onclick="toggleCodeField('json6111')">1. Baseline Scenario</div>
